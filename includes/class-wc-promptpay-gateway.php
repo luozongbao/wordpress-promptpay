@@ -154,6 +154,12 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
         // Mark order as on-hold
         $order->update_status($this->order_status, __('Awaiting PromptPay payment confirmation.', 'wc-promptpay-gateway'));
 
+        // Add PromptPay specific meta data
+        $order->update_meta_data('_promptpay_id', $this->promptpay_id);
+        $order->update_meta_data('_promptpay_payment_method', 'qr_code');
+        $order->update_meta_data('_promptpay_order_reference', WC_PromptPay_Helper::get_order_reference($order));
+        $order->save();
+
         // Add order note
         $order->add_order_note(
             sprintf(

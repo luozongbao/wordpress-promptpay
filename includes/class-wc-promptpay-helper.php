@@ -299,4 +299,63 @@ class WC_PromptPay_Helper {
             'order_status' => 'on-hold',
         );
     }
+
+    /**
+     * Check if High-Performance Order Storage (HPOS) is enabled
+     *
+     * @return bool
+     */
+    public static function is_hpos_enabled() {
+        if (class_exists('\Automattic\WooCommerce\Utilities\OrderUtil')) {
+            return \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
+        }
+        return false;
+    }
+
+    /**
+     * Get order meta data in HPOS-compatible way
+     *
+     * @param WC_Order $order Order object
+     * @param string $meta_key Meta key
+     * @param bool $single Return single value
+     * @return mixed
+     */
+    public static function get_order_meta($order, $meta_key, $single = true) {
+        if (self::is_hpos_enabled()) {
+            return $order->get_meta($meta_key, $single);
+        } else {
+            return get_post_meta($order->get_id(), $meta_key, $single);
+        }
+    }
+
+    /**
+     * Update order meta data in HPOS-compatible way
+     *
+     * @param WC_Order $order Order object
+     * @param string $meta_key Meta key
+     * @param mixed $meta_value Meta value
+     */
+    public static function update_order_meta($order, $meta_key, $meta_value) {
+        if (self::is_hpos_enabled()) {
+            $order->update_meta_data($meta_key, $meta_value);
+            $order->save();
+        } else {
+            update_post_meta($order->get_id(), $meta_key, $meta_value);
+        }
+    }
+
+    /**
+     * Delete order meta data in HPOS-compatible way
+     *
+     * @param WC_Order $order Order object
+     * @param string $meta_key Meta key
+     */
+    public static function delete_order_meta($order, $meta_key) {
+        if (self::is_hpos_enabled()) {
+            $order->delete_meta_data($meta_key);
+            $order->save();
+        } else {
+            delete_post_meta($order->get_id(), $meta_key);
+        }
+    }
 }

@@ -37,6 +37,16 @@ if (file_exists($promptpay_dir)) {
 // Clean up any custom database tables if created in future versions
 global $wpdb;
 
+// Clean up order meta data - HPOS compatible
+if (class_exists('\Automattic\WooCommerce\Utilities\OrderUtil') && 
+    \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
+    // HPOS is enabled - clean meta from orders table
+    $wpdb->query("DELETE FROM {$wpdb->prefix}wc_orders_meta WHERE meta_key LIKE '_promptpay_%'");
+} else {
+    // Traditional post meta
+    $wpdb->query("DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE '_promptpay_%'");
+}
+
 // Example: Drop custom table (if exists in future versions)
 // $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}promptpay_transactions");
 
@@ -46,8 +56,15 @@ wp_clear_scheduled_hook('wc_promptpay_cleanup_qr_files');
 // Remove any custom user meta related to PromptPay
 $wpdb->query("DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE 'wc_promptpay_%'");
 
-// Remove any custom post meta related to PromptPay orders
-$wpdb->query("DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE '_promptpay_%'");
+// Clean up order meta data - HPOS compatible
+if (class_exists('\Automattic\WooCommerce\Utilities\OrderUtil') && 
+    \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
+    // HPOS is enabled - clean meta from orders table
+    $wpdb->query("DELETE FROM {$wpdb->prefix}wc_orders_meta WHERE meta_key LIKE '_promptpay_%'");
+} else {
+    // Traditional post meta
+    $wpdb->query("DELETE FROM {$wpdb->postmeta} WHERE meta_key LIKE '_promptpay_%'");
+}
 
 // Clear any cached data
 if (function_exists('wp_cache_flush')) {

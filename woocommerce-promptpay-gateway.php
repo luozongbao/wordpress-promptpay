@@ -13,6 +13,7 @@
  * Requires PHP: 7.4
  * WC requires at least: 3.0
  * WC tested up to: 9.0
+ * Woo: 8734941:d6e0db0c-72de-4a16-8a2e-35ea5b64a8c0
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -48,6 +49,7 @@ class WC_PromptPay_Gateway_Main {
         add_filter('woocommerce_payment_gateways', array($this, 'add_gateway_class'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+        add_action('before_woocommerce_init', array($this, 'declare_hpos_compatibility'));
         register_activation_hook(__FILE__, array($this, 'plugin_activate'));
         register_deactivation_hook(__FILE__, array($this, 'plugin_deactivate'));
     }
@@ -106,6 +108,32 @@ class WC_PromptPay_Gateway_Main {
     public function add_gateway_class($gateways) {
         $gateways[] = 'WC_PromptPay_Gateway';
         return $gateways;
+    }
+
+    /**
+     * Declare compatibility with WooCommerce High-Performance Order Storage (HPOS)
+     */
+    public function declare_hpos_compatibility() {
+        if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+            // Declare HPOS compatibility
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+            
+            // Declare block checkout compatibility
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, true);
+        }
+    }
+
+    /**
+     * Check HPOS compatibility
+     */
+    public function check_hpos_compatibility() {
+        if (class_exists('\Automattic\WooCommerce\Utilities\OrderUtil')) {
+            if (\Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled()) {
+                // HPOS is enabled and we're compatible
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

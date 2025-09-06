@@ -20,6 +20,13 @@ A WordPress plugin that integrates PromptPay payment gateway with WooCommerce fo
 - PHP 7.4 or higher
 - SSL certificate (recommended for security)
 
+## Compatibility
+
+- ✅ **HPOS Compatible**: Fully supports WooCommerce High-Performance Order Storage
+- ✅ **Block Checkout**: Compatible with WooCommerce block-based checkout
+- ✅ **Multisite**: Works with WordPress multisite installations
+- ✅ **PHP 8.x**: Tested with PHP 8.0, 8.1, and 8.2
+
 ## Installation
 
 1. **Download the Plugin**

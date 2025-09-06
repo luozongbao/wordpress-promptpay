@@ -127,12 +127,53 @@ function test_crc_calculation() {
     echo "✅ CRC calculation function exists\n";
 }
 
+/**
+ * Test HPOS compatibility
+ */
+function test_hpos_compatibility() {
+    echo "=== HPOS Compatibility Test ===\n\n";
+    
+    // Check if WordPress environment is available
+    if (!function_exists('class_exists')) {
+        echo "❌ This test requires WordPress environment\n";
+        echo "Run this test from WordPress admin or wp-cli\n\n";
+        return;
+    }
+    
+    echo "Testing HPOS feature detection...\n";
+    
+    // Check if WooCommerce utilities are available
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        echo "✅ WooCommerce FeaturesUtil class found\n";
+        
+        // Check if custom order tables are enabled
+        if (class_exists('\Automattic\WooCommerce\Utilities\OrderUtil')) {
+            echo "✅ WooCommerce OrderUtil class found\n";
+            
+            try {
+                $hpos_enabled = \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled();
+                echo "HPOS Status: " . ($hpos_enabled ? "✅ ENABLED" : "ℹ️ DISABLED") . "\n";
+            } catch (Exception $e) {
+                echo "⚠️ Cannot determine HPOS status: " . $e->getMessage() . "\n";
+            }
+        } else {
+            echo "ℹ️ OrderUtil class not found (older WooCommerce version)\n";
+        }
+    } else {
+        echo "ℹ️ FeaturesUtil class not found (older WooCommerce version)\n";
+    }
+    
+    echo "\n" . str_repeat("-", 50) . "\n\n";
+}
+
 // Run tests if called directly
 if (php_sapi_name() === 'cli') {
     test_promptpay_qr();
     test_promptpay_validation();
     test_crc_calculation();
+    test_hpos_compatibility();
     
     echo "=== Test Complete ===\n";
     echo "Note: To generate actual QR images, use the WordPress environment.\n";
+    echo "Note: HPOS tests require WooCommerce to be active.\n";
 }

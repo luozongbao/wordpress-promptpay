@@ -50,6 +50,13 @@
 - **MySQL**: 5.6 or higher
 - **SSL Certificate**: Recommended for production
 
+### WooCommerce Compatibility
+
+- ✅ **HPOS (High-Performance Order Storage)**: Fully compatible
+- ✅ **Block Checkout**: Compatible with WooCommerce blocks
+- ✅ **Traditional Checkout**: Works with classic checkout
+- ✅ **REST API**: Compatible with WooCommerce REST API
+
 ### PHP Extensions Required
 
 - `gd` or `imagick` (for QR code generation)
