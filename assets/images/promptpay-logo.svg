@@ -1,0 +1,38 @@
+<svg width="100" height="40" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- PromptPay Logo Placeholder -->
+  <defs>
+    <linearGradient id="promptpayGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e88e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d47a1;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100" height="40" rx="6" ry="6" fill="url(#promptpayGradient)"/>
+  
+  <!-- QR Code Icon -->
+  <g transform="translate(8, 8)">
+    <rect x="0" y="0" width="3" height="3" fill="white"/>
+    <rect x="4" y="0" width="3" height="3" fill="white"/>
+    <rect x="8" y="0" width="3" height="3" fill="white"/>
+    <rect x="0" y="4" width="3" height="3" fill="white"/>
+    <rect x="8" y="4" width="3" height="3" fill="white"/>
+    <rect x="0" y="8" width="3" height="3" fill="white"/>
+    <rect x="4" y="8" width="3" height="3" fill="white"/>
+    <rect x="8" y="8" width="3" height="3" fill="white"/>
+    
+    <!-- Center dot -->
+    <rect x="4" y="4" width="3" height="3" fill="white"/>
+    
+    <!-- QR pattern -->
+    <rect x="1" y="1" width="1" height="1" fill="#1e88e5"/>
+    <rect x="5" y="1" width="1" height="1" fill="#1e88e5"/>
+    <rect x="9" y="1" width="1" height="1" fill="#1e88e5"/>
+    <rect x="1" y="9" width="1" height="1" fill="#1e88e5"/>
+    <rect x="9" y="9" width="1" height="1" fill="#1e88e5"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="30" y="16" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">PromptPay</text>
+  <text x="30" y="28" font-family="Arial, sans-serif" font-size="7" fill="white" opacity="0.9">QR Payment</text>
+</svg>
