@@ -157,7 +157,10 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
         // Add PromptPay specific meta data
         $order->update_meta_data('_promptpay_id', $this->promptpay_id);
         $order->update_meta_data('_promptpay_payment_method', 'qr_code');
-        $order->update_meta_data('_promptpay_order_reference', WC_PromptPay_Helper::get_order_reference($order));
+        
+        // Generate order reference
+        $order_reference = 'PP-' . $order->get_order_number();
+        $order->update_meta_data('_promptpay_order_reference', $order_reference);
         $order->save();
 
         // Add order note
@@ -287,8 +290,9 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
             return false;
         }
 
-        // Check if WooCommerce currency is supported
-        if (!WC_PromptPay_Helper::is_currency_supported()) {
+        // Check if WooCommerce currency is THB
+        $current_currency = get_woocommerce_currency();
+        if ($current_currency !== 'THB') {
             return false;
         }
 
@@ -299,10 +303,6 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
 
         // For frontend, check if PromptPay ID is configured
         if (empty($this->promptpay_id)) {
-            // Log for debugging
-            if (WC_PromptPay_Helper::is_development()) {
-                WC_PromptPay_Helper::log('PromptPay gateway not available: PromptPay ID not configured', 'debug');
-            }
             return false;
         }
 

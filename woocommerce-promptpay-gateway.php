@@ -74,12 +74,6 @@ class WC_PromptPay_Gateway_Main {
             return;
         }
 
-        // Check if currency is supported
-        if (!WC_PromptPay_Helper::is_currency_supported()) {
-            add_action('admin_notices', array($this, 'currency_not_supported_notice'));
-            // Don't return here - let the gateway load but it won't be available on frontend
-        }
-
         // Load plugin text domain
         load_plugin_textdomain('wc-promptpay-gateway', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
@@ -88,25 +82,15 @@ class WC_PromptPay_Gateway_Main {
 
         // Initialize gateway
         add_action('woocommerce_init', array($this, 'init_gateway'));
-        
-        // Add debug admin notice if in debug mode
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            add_action('admin_notices', array($this, 'debug_admin_notice'));
-        }
     }
 
     /**
      * Include required files
      */
     private function includes() {
+        require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-helper.php';
         require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-gateway.php';
         require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-qr-generator.php';
-        require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-helper.php';
-        
-        // Include debug tools if WP_DEBUG is enabled
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/debug-tools.php';
-        }
     }
 
     /**
@@ -154,10 +138,21 @@ class WC_PromptPay_Gateway_Main {
 
     /**
      * Debug admin notice (only shown when WP_DEBUG is true)
+     * Temporarily disabled to avoid class loading issues
      */
     public function debug_admin_notice() {
+        // Temporarily disabled
+        return;
+        
+        /*
         // Only show on WooCommerce settings pages
         if (!isset($_GET['page']) || $_GET['page'] !== 'wc-settings') {
+            return;
+        }
+
+        // Make sure helper class exists
+        if (!class_exists('WC_PromptPay_Helper')) {
+            echo '<div class="notice notice-error"><p><strong>PromptPay Debug:</strong> Helper class not loaded!</p></div>';
             return;
         }
 
@@ -172,6 +167,7 @@ class WC_PromptPay_Gateway_Main {
         }
         echo '</ul>';
         echo '</div>';
+        */
     }
 
     /**

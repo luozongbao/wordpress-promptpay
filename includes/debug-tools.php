@@ -22,6 +22,11 @@ function promptpay_debug_shortcode($atts) {
         return '<p>Access denied. Administrator privileges required.</p>';
     }
 
+    // Check if helper class exists
+    if (!class_exists('WC_PromptPay_Helper')) {
+        return '<p>Error: PromptPay Helper class not loaded. Please check plugin installation.</p>';
+    }
+
     $debug_info = WC_PromptPay_Helper::debug_gateway_availability();
     
     ob_start();
