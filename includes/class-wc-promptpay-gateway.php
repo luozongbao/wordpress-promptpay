@@ -17,6 +17,27 @@ if (!defined('ABSPATH')) {
 class WC_PromptPay_Gateway extends WC_Payment_Gateway {
 
     /**
+     * PromptPay ID (phone number or National ID)
+     *
+     * @var string
+     */
+    public $promptpay_id;
+
+    /**
+     * Payment instructions for customers
+     *
+     * @var string
+     */
+    public $instructions;
+
+    /**
+     * Order status after checkout
+     *
+     * @var string
+     */
+    public $order_status;
+
+    /**
      * Constructor
      */
     public function __construct() {
