@@ -74,6 +74,12 @@ class WC_PromptPay_Gateway_Main {
             return;
         }
 
+        // Check if currency is supported
+        if (!WC_PromptPay_Helper::is_currency_supported()) {
+            add_action('admin_notices', array($this, 'currency_not_supported_notice'));
+            // Don't return here - let the gateway load but it won't be available on frontend
+        }
+
         // Load plugin text domain
         load_plugin_textdomain('wc-promptpay-gateway', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
@@ -82,6 +88,11 @@ class WC_PromptPay_Gateway_Main {
 
         // Initialize gateway
         add_action('woocommerce_init', array($this, 'init_gateway'));
+        
+        // Add debug admin notice if in debug mode
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            add_action('admin_notices', array($this, 'debug_admin_notice'));
+        }
     }
 
     /**
@@ -91,6 +102,11 @@ class WC_PromptPay_Gateway_Main {
         require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-gateway.php';
         require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-qr-generator.php';
         require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-helper.php';
+        
+        // Include debug tools if WP_DEBUG is enabled
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/debug-tools.php';
+        }
     }
 
     /**
@@ -134,6 +150,28 @@ class WC_PromptPay_Gateway_Main {
             }
         }
         return false;
+    }
+
+    /**
+     * Debug admin notice (only shown when WP_DEBUG is true)
+     */
+    public function debug_admin_notice() {
+        // Only show on WooCommerce settings pages
+        if (!isset($_GET['page']) || $_GET['page'] !== 'wc-settings') {
+            return;
+        }
+
+        $debug_info = WC_PromptPay_Helper::debug_gateway_availability();
+        
+        echo '<div class="notice notice-info">';
+        echo '<p><strong>PromptPay Gateway Debug Info:</strong></p>';
+        echo '<ul>';
+        foreach ($debug_info as $key => $value) {
+            $status = is_bool($value) ? ($value ? '✅' : '❌') : $value;
+            echo '<li>' . esc_html($key) . ': ' . esc_html($status) . '</li>';
+        }
+        echo '</ul>';
+        echo '</div>';
     }
 
     /**
@@ -187,6 +225,19 @@ class WC_PromptPay_Gateway_Main {
              sprintf(
                  esc_html__('WooCommerce PromptPay Gateway requires WooCommerce to be installed and active. You can download %s here.', 'wc-promptpay-gateway'),
                  '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>'
+             ) . 
+             '</strong></p></div>';
+    }
+
+    /**
+     * Currency not supported notice
+     */
+    public function currency_not_supported_notice() {
+        $current_currency = get_woocommerce_currency();
+        echo '<div class="notice notice-warning"><p><strong>' . 
+             sprintf(
+                 esc_html__('PromptPay Gateway: Current currency (%s) is not supported. Please set WooCommerce currency to THB (Thai Baht).', 'wc-promptpay-gateway'),
+                 $current_currency
              ) . 
              '</strong></p></div>';
     }

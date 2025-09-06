@@ -285,6 +285,44 @@ class WC_PromptPay_Helper {
     }
 
     /**
+     * Debug gateway availability
+     *
+     * @return array Debug information
+     */
+    public static function debug_gateway_availability() {
+        $debug_info = array();
+        
+        // Check if WooCommerce is active
+        $debug_info['woocommerce_active'] = class_exists('WooCommerce');
+        
+        // Check if gateway class exists
+        $debug_info['gateway_class_exists'] = class_exists('WC_PromptPay_Gateway');
+        
+        // Check currency
+        $debug_info['current_currency'] = get_woocommerce_currency();
+        $debug_info['currency_supported'] = self::is_currency_supported();
+        
+        // Check if gateway is enabled
+        $gateway = self::get_gateway();
+        if ($gateway) {
+            $debug_info['gateway_enabled'] = 'yes' === $gateway->enabled;
+            $debug_info['promptpay_id_configured'] = !empty($gateway->promptpay_id);
+            $debug_info['gateway_available'] = $gateway->is_available();
+        } else {
+            $debug_info['gateway_instance'] = false;
+        }
+        
+        // Check if payment gateways are registered
+        if (function_exists('WC')) {
+            $available_gateways = WC()->payment_gateways()->get_available_payment_gateways();
+            $debug_info['promptpay_in_available_gateways'] = isset($available_gateways['promptpay']);
+            $debug_info['total_available_gateways'] = count($available_gateways);
+        }
+        
+        return $debug_info;
+    }
+
+    /**
      * Get default settings
      *
      * @return array

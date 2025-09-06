@@ -282,11 +282,27 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
      * Check if this gateway is available
      */
     public function is_available() {
+        // Check parent availability first
         if (!parent::is_available()) {
             return false;
         }
 
+        // Check if WooCommerce currency is supported
+        if (!WC_PromptPay_Helper::is_currency_supported()) {
+            return false;
+        }
+
+        // For admin settings page, always show the gateway
+        if (is_admin() && !wp_doing_ajax()) {
+            return true;
+        }
+
+        // For frontend, check if PromptPay ID is configured
         if (empty($this->promptpay_id)) {
+            // Log for debugging
+            if (WC_PromptPay_Helper::is_development()) {
+                WC_PromptPay_Helper::log('PromptPay gateway not available: PromptPay ID not configured', 'debug');
+            }
             return false;
         }
 
