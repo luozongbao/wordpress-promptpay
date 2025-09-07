@@ -4,21 +4,28 @@ A WordPress plugin that integrates PromptPay payment gateway with WooCommerce fo
 
 ## Features
 
+### Core Payment Features
 - **EMVCo Compliant**: Follows Bank of Thailand EMVCo QR specification
-- **Flexible PromptPay ID**: Supports both phone numbers (10 digits) and National ID (13 digits)
-- **QR Code Generation**: Automatic QR code generation with amount and order details
+- **Flexible PromptPay ID**: Supports phone numbers, National ID, and e-Wallet IDs
+- **QR Code Generation**: Uses bundled PromptPay QR library (no external dependencies)
+- **Dedicated Payment Page**: Custom payment page with QR code and instructions
+- **Real-time Status Updates**: Auto-refresh payment status with AJAX
+- **Manual Payment Confirmation**: Customer-initiated payment confirmation
+
+### Advanced Features
+- **Bank API Integration**: Automatic payment verification with Thai bank APIs
+- **Multiple Bank Support**: SCB, Bangkok Bank, Krung Thai Bank, and custom APIs
+- **Admin Payment Management**: Comprehensive payment verification interface
+- **Security**: Token-based verification and secure API communication
 - **Responsive Design**: Mobile-friendly QR code display
-- **Copy Functionality**: One-click copy PromptPay ID for manual transfer
-- **Order Management**: Integrates with WooCommerce order status workflow
 - **Multi-language**: Thai and English language support
-- **Security**: Proper sanitization, validation, and nonce verification
 
 ## Requirements
 
-- WordPress 5.0 or higher
-- WooCommerce 3.0 or higher
-- PHP 7.4 or higher
-- SSL certificate (recommended for security)
+- WordPress 5.0+
+- WooCommerce 3.0+
+- PHP 7.4+
+- No external dependencies required
 
 ## Compatibility
 

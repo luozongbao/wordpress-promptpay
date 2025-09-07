@@ -172,8 +172,8 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
             );
         }
 
-        // Mark order as on-hold
-        $order->update_status($this->order_status, __('Awaiting PromptPay payment confirmation.', 'wc-promptpay-gateway'));
+        // Mark order as on-hold (pending payment)
+        $order->update_status('on-hold', __('Awaiting PromptPay payment confirmation.', 'wc-promptpay-gateway'));
 
         // Add PromptPay specific meta data
         $order->update_meta_data('_promptpay_id', $this->promptpay_id);
@@ -182,6 +182,12 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
         // Generate order reference
         $order_reference = 'PP-' . $order->get_order_number();
         $order->update_meta_data('_promptpay_order_reference', $order_reference);
+        
+        // Generate payment token for security
+        $qr_generator = new WC_PromptPay_QR_Generator();
+        $payment_token = $qr_generator->generate_verification_token($order_id);
+        $order->update_meta_data('_promptpay_payment_token', $payment_token);
+        
         $order->save();
 
         // Add order note
@@ -199,10 +205,19 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
         // Remove cart
         WC()->cart->empty_cart();
 
-        // Return success and redirect to the thank you page
+        // Redirect to PromptPay payment page instead of thank you page
+        $payment_url = add_query_arg(
+            array(
+                'order_id' => $order_id,
+                'token' => $payment_token,
+            ),
+            home_url('/promptpay-payment/')
+        );
+
+        // Return success and redirect to the PromptPay payment page
         return array(
             'result'   => 'success',
-            'redirect' => $this->get_return_url($order),
+            'redirect' => $payment_url,
         );
     }
 

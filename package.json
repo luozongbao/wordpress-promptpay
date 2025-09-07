@@ -11,7 +11,7 @@
     "lint:js": "eslint assets/js/",
     "lint:js:fix": "eslint assets/js/ --fix",
     "test": "phpunit",
-    "zip": "zip -r woocommerce-promptpay-gateway.zip . -x '*.git*' 'node_modules/*' 'tests/*' '*.log'"
+    "zip": "zip -r woocommerce-promptpay-gateway.zip . -x '*.git*' 'node_modules/*' 'tests/*' '*.log' 'composer.lock' 'vendor/*'"
   },
   "keywords": [
     "wordpress",

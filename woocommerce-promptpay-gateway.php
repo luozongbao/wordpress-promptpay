@@ -91,6 +91,12 @@ class WC_PromptPay_Gateway_Main {
         require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-helper.php';
         require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-gateway.php';
         require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-qr-generator.php';
+        require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-payment-handler.php';
+        
+        // Include admin class only in admin area
+        if (is_admin()) {
+            require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-admin.php';
+        }
     }
 
     /**
@@ -99,6 +105,16 @@ class WC_PromptPay_Gateway_Main {
     public function init_gateway() {
         if (class_exists('WC_PromptPay_Gateway')) {
             new WC_PromptPay_Gateway();
+        }
+        
+        // Initialize payment handler
+        if (class_exists('WC_PromptPay_Payment_Handler')) {
+            new WC_PromptPay_Payment_Handler();
+        }
+        
+        // Initialize admin class
+        if (is_admin() && class_exists('WC_PromptPay_Admin')) {
+            new WC_PromptPay_Admin();
         }
     }
 
@@ -254,6 +270,11 @@ class WC_PromptPay_Gateway_Main {
         $htaccess_file = $promptpay_dir . '/.htaccess';
         if (!file_exists($htaccess_file)) {
             file_put_contents($htaccess_file, "Options -Indexes\nDeny from all");
+        }
+
+        // Flush rewrite rules for payment page
+        if (class_exists('WC_PromptPay_Payment_Handler')) {
+            WC_PromptPay_Payment_Handler::flush_rewrite_rules();
         }
     }
 

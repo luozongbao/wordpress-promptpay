@@ -1,0 +1,22 @@
+{
+    "name": "luozongbao/woocommerce-promptpay-gateway",
+    "description": "WooCommerce payment gateway for PromptPay (Thailand)",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Zongbao Luo",
+            "email": "luozongbao@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "classmap": ["includes/"]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
