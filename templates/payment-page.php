@@ -85,7 +85,11 @@ get_header();
                         $qr_image_url = $qr_generator->generate_qr_image($qr_data, $order_id);
                         ?>
                         <div class="qr-code-container">
-                            <h3><?php esc_html_e('Scan QR Code', 'wc-promptpay-gateway'); ?></h3>
+                            <div class="promptpay-logo-header">
+                                <img src="<?php echo esc_url(WC_PROMPTPAY_PLUGIN_URL . 'assets/images/promptpay-logo.svg'); ?>" 
+                                     alt="<?php esc_attr_e('PromptPay', 'wc-promptpay-gateway'); ?>" 
+                                     class="promptpay-logo" />
+                            </div>
                             <?php if ($qr_image_url): ?>
                                 <div class="qr-image-wrapper">
                                     <img src="<?php echo esc_url($qr_image_url); ?>" 
@@ -157,9 +161,14 @@ get_header();
                     <a href="<?php echo esc_url(wc_get_checkout_url()); ?>" class="back-to-checkout">
                         <?php esc_html_e('← Back to Checkout', 'wc-promptpay-gateway'); ?>
                     </a>
-                    <button type="button" id="manual-confirm-btn" class="manual-confirm-btn" style="display: none;">
-                        <?php esc_html_e('I have completed the payment', 'wc-promptpay-gateway'); ?>
-                    </button>
+                    <div class="payment-actions-center">
+                        <button type="button" id="manual-confirm-btn" class="manual-confirm-btn" style="display: none;">
+                            <?php esc_html_e('I have completed the payment', 'wc-promptpay-gateway'); ?>
+                        </button>
+                    </div>
+                    <a href="<?php echo esc_url($order->get_checkout_order_received_url()); ?>" class="payment-completed">
+                        <?php esc_html_e('Payment Completed →', 'wc-promptpay-gateway'); ?>
+                    </a>
                 </div>
             </div>
         </div>
