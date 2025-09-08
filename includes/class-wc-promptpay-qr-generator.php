@@ -179,7 +179,10 @@ class WC_PromptPay_QR_Generator {
      * Format TLV (Tag-Length-Value) field
      */
     private function format_tlv($id, $value) {
-        return implode('', [$id, substr('00' . strlen($value), -2), $value]);
+        // EMVCo: Length field should be at least 2 digits, but allow longer for values >99
+        $length = strlen($value);
+        $length_str = str_pad($length, max(2, strlen((string)$length)), '0', STR_PAD_LEFT);
+        return implode('', [$id, $length_str, $value]);
     }
     
     /**
