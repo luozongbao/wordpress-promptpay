@@ -225,11 +225,18 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
      * Output for the order received page.
      */
     public function thankyou_page($order_id) {
+        // Only show basic instructions on thank you page, no QR code needed
         if ($this->instructions) {
             echo wp_kses_post(wpautop(wptexturize($this->instructions)));
         }
-
-        $this->display_promptpay_qr($order_id);
+        
+        // Show confirmation message that payment was processed
+        $order = wc_get_order($order_id);
+        if ($order && $order->get_payment_method() === $this->id) {
+            echo '<div class="woocommerce-message">';
+            echo esc_html__('Thank you for your PromptPay payment. Your order will be processed once payment is confirmed.', 'wc-promptpay-gateway');
+            echo '</div>';
+        }
     }
 
     /**
