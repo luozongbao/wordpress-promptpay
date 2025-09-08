@@ -180,8 +180,8 @@ function checkPaymentStatus() {
         },
         body: new URLSearchParams({
             action: 'promptpay_check_payment',
-            order_id: '<?php echo $order_id; ?>',
-            token: '<?php echo $payment_token; ?>',
+            order_id: '<?php echo esc_js($order_id); ?>',
+            token: '<?php echo esc_js($payment_token); ?>',
             nonce: '<?php echo wp_create_nonce('promptpay_check_payment'); ?>'
         })
     })
