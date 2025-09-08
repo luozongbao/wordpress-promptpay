@@ -316,15 +316,37 @@ class WC_PromptPay_Admin {
     private function display_payment_overview() {
         global $wpdb;
         
+        // Check if HPOS (High-Performance Order Storage) is enabled
+        $hpos_enabled = false;
+        if (class_exists('\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController')) {
+            $hpos_controller = wc_get_container()->get(\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController::class);
+            if (method_exists($hpos_controller, 'custom_orders_table_usage_is_enabled')) {
+                $hpos_enabled = $hpos_controller->custom_orders_table_usage_is_enabled();
+            }
+        }
+
         // Get PromptPay orders statistics
-        $orders = $wpdb->get_results("
-            SELECT p.ID, p.post_status, pm.meta_value as payment_method
-            FROM {$wpdb->posts} p
-            LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = '_payment_method'
-            WHERE p.post_type = 'shop_order' AND pm.meta_value = 'promptpay'
-            ORDER BY p.post_date DESC
-            LIMIT 50
-        ");
+        if ($hpos_enabled) {
+            // HPOS: Use wc_orders and wc_order_meta tables
+            $orders = $wpdb->get_results("
+                SELECT o.id as ID, o.status as post_status, om.meta_value as payment_method
+                FROM {$wpdb->prefix}wc_orders o
+                LEFT JOIN {$wpdb->prefix}wc_order_meta om ON o.id = om.order_id AND om.meta_key = '_payment_method'
+                WHERE om.meta_value = 'promptpay'
+                ORDER BY o.date_created_gmt DESC
+                LIMIT 50
+            ");
+        } else {
+            // Legacy: Use posts and postmeta tables
+            $orders = $wpdb->get_results("
+                SELECT p.ID, p.post_status, pm.meta_value as payment_method
+                FROM {$wpdb->posts} p
+                LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = '_payment_method'
+                WHERE p.post_type = 'shop_order' AND pm.meta_value = 'promptpay'
+                ORDER BY p.post_date DESC
+                LIMIT 50
+            ");
+        }
         
         $pending_count = 0;
         $completed_count = 0;
