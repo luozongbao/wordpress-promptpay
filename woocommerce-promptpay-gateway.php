@@ -50,6 +50,7 @@ class WC_PromptPay_Gateway_Main {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_action('before_woocommerce_init', array($this, 'declare_hpos_compatibility'));
+        add_action('woocommerce_blocks_loaded', array($this, 'blocks_support'));
         register_activation_hook(__FILE__, array($this, 'plugin_activate'));
         register_deactivation_hook(__FILE__, array($this, 'plugin_deactivate'));
     }
@@ -97,6 +98,11 @@ class WC_PromptPay_Gateway_Main {
         if (is_admin()) {
             require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-admin.php';
         }
+
+        // Include blocks support
+        if (class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
+            require_once WC_PROMPTPAY_PLUGIN_PATH . 'includes/class-wc-promptpay-blocks-support.php';
+        }
     }
 
     /**
@@ -134,8 +140,22 @@ class WC_PromptPay_Gateway_Main {
             // Declare HPOS compatibility
             \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
             
-            // Declare block checkout compatibility
+            // Declare block checkout compatibility 
             \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, true);
+        }
+    }
+
+    /**
+     * Add support for WooCommerce Blocks
+     */
+    public function blocks_support() {
+        if (class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
+            add_action(
+                'woocommerce_blocks_payment_method_type_registration',
+                function( $payment_method_registry ) {
+                    $payment_method_registry->register( new WC_PromptPay_Blocks_Support() );
+                }
+            );
         }
     }
 
