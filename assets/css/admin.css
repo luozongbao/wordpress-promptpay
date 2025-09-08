@@ -1,0 +1,219 @@
+/* WooCommerce PromptPay Admin Styles */
+
+.woocommerce_page_wc-settings .promptpay-admin-section {
+    margin: 20px 0;
+}
+
+.promptpay-admin-info {
+    background: #f0f6fc;
+    border: 1px solid #c6e2ff;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.promptpay-admin-info h4 {
+    margin-top: 0;
+    color: #0969da;
+}
+
+.promptpay-admin-info p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.promptpay-admin-info ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.promptpay-admin-info li {
+    margin: 5px 0;
+}
+
+.promptpay-admin-warning {
+    background: #fff8e1;
+    border: 1px solid #ffcc02;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.promptpay-admin-warning h4 {
+    margin-top: 0;
+    color: #f57f17;
+}
+
+.promptpay-test-section {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.promptpay-test-section h4 {
+    margin-top: 0;
+    color: #495057;
+}
+
+.promptpay-test-input {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    align-items: center;
+}
+
+.promptpay-test-input input {
+    flex: 1;
+    max-width: 300px;
+}
+
+.promptpay-test-btn {
+    background: #007cba;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.promptpay-test-btn:hover {
+    background: #005a87;
+}
+
+.promptpay-test-result {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+.promptpay-test-result.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.promptpay-test-result.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.promptpay-settings-tabs {
+    display: flex;
+    border-bottom: 1px solid #ccd0d4;
+    margin: 20px 0 0 0;
+}
+
+.promptpay-settings-tab {
+    background: none;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: #646970;
+    font-size: 14px;
+}
+
+.promptpay-settings-tab.active {
+    color: #1d2327;
+    border-bottom-color: #007cba;
+}
+
+.promptpay-settings-tab:hover {
+    color: #1d2327;
+}
+
+.promptpay-settings-content {
+    display: none;
+    padding: 20px 0;
+}
+
+.promptpay-settings-content.active {
+    display: block;
+}
+
+.promptpay-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.promptpay-feature-card {
+    background: white;
+    border: 1px solid #c3c4c7;
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.promptpay-feature-card h4 {
+    margin-top: 0;
+    color: #1d2327;
+}
+
+.promptpay-feature-card p {
+    color: #646970;
+    line-height: 1.5;
+}
+
+.promptpay-status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.promptpay-status-indicator.enabled {
+    background: #d4edda;
+    color: #155724;
+}
+
+.promptpay-status-indicator.disabled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.promptpay-status-indicator.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.promptpay-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .promptpay-test-input {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .promptpay-test-input input {
+        max-width: none;
+        margin-bottom: 10px;
+    }
+    
+    .promptpay-settings-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .promptpay-settings-tab {
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    .promptpay-feature-grid {
+        grid-template-columns: 1fr;
+    }
+}

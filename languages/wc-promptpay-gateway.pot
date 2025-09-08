@@ -1,0 +1,158 @@
+# Copyright (C) 2024 WooCommerce PromptPay Gateway
+# This file is distributed under the same license as the WooCommerce PromptPay Gateway package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce PromptPay Gateway 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/luozongbao/wordpress-promptpay/issues\n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Language-Team: \n"
+"X-Generator: WordPress\n"
+"X-Domain: wc-promptpay-gateway\n"
+
+#: includes/class-wc-promptpay-gateway.php:25
+msgid "PromptPay"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:26
+msgid "Accept payments via PromptPay using QR code generation following Bank of Thailand EMVCo specification."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:50
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:52
+msgid "Enable PromptPay Payment"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:55
+msgid "Title"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:58
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:63
+msgid "Description"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:66
+msgid "Payment method description that the customer will see on your checkout."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:67
+msgid "Pay securely using PromptPay QR code. Scan the QR code with your mobile banking app."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:71
+msgid "PromptPay ID"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:74
+msgid "Enter your PromptPay ID (10-digit phone number or 13-digit National ID)."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:79
+msgid "Instructions"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:82
+msgid "Instructions that will be added to the thank you page and emails."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:83
+msgid "Please scan the QR code below with your mobile banking app to complete the payment. The order will be processed after payment confirmation."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:87
+msgid "Order Status After Checkout"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:90
+msgid "Order status after customer completes checkout."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:94
+msgid "On Hold"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:95
+msgid "Processing"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:96
+msgid "Pending Payment"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:113
+msgid "PromptPay ID must be a 10-digit phone number (starting with 0) or 13-digit National ID."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:133
+msgid "Order not found."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:141
+msgid "PromptPay ID is not configured. Please contact the store administrator."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:149
+msgid "Awaiting PromptPay payment confirmation."
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:154
+msgid "PromptPay payment initiated. QR code generated for amount: %s THB. PromptPay ID: %s"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:193
+msgid "PromptPay ID: %s"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:194
+msgid "Amount: %s THB"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:213
+msgid "PromptPay Payment"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:219
+msgid "PromptPay QR Code"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:224
+msgid "PromptPay ID:"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:227
+msgid "Copy"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:230
+msgid "Amount:"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:231
+msgid "Order Reference:"
+msgstr ""
+
+#: includes/class-wc-promptpay-gateway.php:238
+msgid "Unable to generate QR code. Please use the PromptPay ID for manual transfer."
+msgstr ""
+
+#: woocommerce-promptpay-gateway.php:123
+msgid "WooCommerce PromptPay Gateway requires WooCommerce to be installed and active. You can download %s here."
+msgstr ""
+
+#: assets/js/promptpay.js:35
+msgid "Copy PromptPay ID"
+msgstr ""
+
+#: assets/js/promptpay.js:36
+msgid "Copied!"
+msgstr ""

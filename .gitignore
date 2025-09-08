@@ -1,0 +1,231 @@
+# WordPress PromptPay Gateway Plugin - .gitignore
+
+# =========================
+# WordPress Core Files
+# =========================
+# Don't include WordPress core files if this plugin is part of a full WP install
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+wp-content/blogs.dir/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/updraft/
+wp-content/backupwordpress-*/
+
+# =========================
+# Dependencies & Build
+# =========================
+# Composer (we're using bundled dependencies now)
+/vendor/
+composer.lock
+composer.phar
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Build outputs
+/dist/
+/build/
+*.min.js
+*.min.css
+
+# =========================
+# Development & Testing
+# =========================
+# PHPUnit
+/tests/coverage/
+phpunit.xml
+.phpunit.result.cache
+
+# Development files
+*.local
+test-*.php
+debug.log
+error_log
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.sublime-*
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# =========================
+# Generated Files
+# =========================
+# QR Code uploads (these should be temporary anyway)
+/wp-content/uploads/promptpay-qr/*.png
+/uploads/promptpay-qr/*.png
+
+# WordPress uploads (if plugin contains uploads)
+uploads/
+
+# Log files
+*.log
+logs/
+wp-content/debug.log
+
+# Cache files
+*.cache
+.cache/
+cache/
+
+# =========================
+# OS Generated Files
+# =========================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# =========================
+# Security & Credentials
+# =========================
+# Configuration files with sensitive data
+wp-config-local.php
+.env
+.env.local
+.env.production
+.env.staging
+
+# SSH keys
+*.pem
+*.key
+id_rsa*
+id_dsa*
+*.ppk
+
+# =========================
+# Archives & Packages
+# =========================
+*.zip
+*.tar.gz
+*.tar.bz2
+*.rar
+*.7z
+
+# But allow the distribution zip if needed
+!woocommerce-promptpay-gateway.zip
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*~
+
+# =========================
+# Plugin Specific
+# =========================
+# Language files that are auto-generated
+languages/*.mo
+
+# Keep the .pot template file
+!languages/*.pot
+
+# Configuration backups
+*-config-backup-*
+
+# =========================
+# Database
+# =========================
+*.sql
+*.sqlite
+*.db
+
+# =========================
+# Documentation Build
+# =========================
+/docs/_build/
+/docs/.doctrees/
+
+# =========================
+# Git Specific
+# =========================
+# Ignore git hooks if any
+.git/hooks/*
+!.git/hooks/README.md
+
+# =========================
+# Docker (if used)
+# =========================
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# =========================
+# CI/CD
+# =========================
+.github/workflows/secrets/
+.travis.yml
+.gitlab-ci.yml
+circle.yml
+
+# =========================
+# Misc Development Tools
+# =========================
+.phpcs.xml
+.phpmd.xml
+.scrutinizer.yml
+.codeclimate.yml
+
+# SASS/LESS
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+
+# =========================
+# Allow Important Files
+# =========================
+# Make sure these important files are always tracked
+!.gitignore
+!README.md
+!LICENSE
+!composer.json
+!package.json
+!phpcs.xml
+!woocommerce-promptpay-gateway.php
+
+# Allow all files in includes/ (our bundled code)
+!includes/
+!includes/**/*
+
+# Allow templates and assets
+!templates/
+!templates/**/*
+!assets/
+!assets/**/*
+
+# Allow language template
+!languages/wc-promptpay-gateway.pot
