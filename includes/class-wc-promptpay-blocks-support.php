@@ -38,7 +38,7 @@ final class WC_PromptPay_Blocks_Support extends AbstractPaymentMethodType {
     public function initialize() {
         $this->settings = get_option('woocommerce_promptpay_settings', []);
         $gateways = WC()->payment_gateways->payment_gateways();
-        $this->gateway = $gateways[$this->name];
+        $this->gateway = isset($gateways[$this->name]) ? $gateways[$this->name] : null;
     }
 
     /**
@@ -47,7 +47,7 @@ final class WC_PromptPay_Blocks_Support extends AbstractPaymentMethodType {
      * @return boolean
      */
     public function is_active() {
-        return $this->gateway->is_available();
+        return $this->gateway && $this->gateway->is_available();
     }
 
     /**
