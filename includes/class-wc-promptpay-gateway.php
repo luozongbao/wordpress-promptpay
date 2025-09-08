@@ -271,8 +271,18 @@ class WC_PromptPay_Gateway extends WC_Payment_Gateway {
             
             echo '<div class="promptpay-qr-container">';
             if ($qr_image_url) {
-                echo '<div class="promptpay-qr-code">';
-                echo '<img src="' . esc_url($qr_image_url) . '" alt="' . esc_attr__('PromptPay QR Code', 'wc-promptpay-gateway') . '" />';
+                echo '<div class="qr-code-container">';
+                
+                // PromptPay logo header
+                echo '<div class="promptpay-logo-header">';
+                echo '<img src="' . esc_url(WC_PROMPTPAY_PLUGIN_URL . 'assets/images/promptpay-logo.svg') . '" alt="' . esc_attr__('PromptPay', 'wc-promptpay-gateway') . '" class="promptpay-logo" />';
+                echo '</div>';
+                
+                // QR code
+                echo '<div class="qr-image-wrapper">';
+                echo '<img src="' . esc_url($qr_image_url) . '" alt="' . esc_attr__('PromptPay QR Code', 'wc-promptpay-gateway') . '" class="promptpay-qr-image" />';
+                echo '</div>';
+                
                 echo '</div>';
             }
             
