@@ -105,8 +105,23 @@ if (!class_exists('WC_PromptPay_QR_Lib')) {
                 // e-Wallet ID: use as is
                 return $clean_id;
             } else {
-                throw new InvalidArgumentException('Invalid PromptPay ID format: ' . $id);
+                throw new InvalidArgumentException('Invalid PromptPay ID format: ' . self::maskPromptPayId($id));
             }
+        }
+        
+        /**
+         * Mask PromptPay ID for error messages (show only last 4 digits)
+         *
+         * @param string $id Raw PromptPay ID
+         * @return string Masked PromptPay ID
+         */
+        private static function maskPromptPayId($id) {
+            $clean_id = preg_replace('/[^0-9]/', '', $id);
+            $len = strlen($clean_id);
+            if ($len <= 4) {
+                return str_repeat('*', $len);
+            }
+            return str_repeat('*', $len - 4) . substr($clean_id, -4);
         }
         
         /**
